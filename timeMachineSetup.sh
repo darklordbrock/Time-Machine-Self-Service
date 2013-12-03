@@ -10,22 +10,25 @@
 # at the Univeristy of Wisconsin Milwaukee
 ##############
 
+#CocoaDialog Variables 
+CD="/Applications/Utilities/CocoaDialog.app/Contents/MacOS/CocoaDialog"
+CDI="/Applications/Utilities/CocoaDialog.app/Contents/Resources"
 
-YES=`echo "button returned:Yes"`
-NO=`echo "button returned:No"`
+#YES=`echo "button returned:Yes"`
+#NO=`echo "button returned:No"`
 
-echo $YES "test1"
-echo $NO "test2"
+#echo $YES "test1"
+#echo $NO "test2"
 
 #applescipt to ask which drive to enable Time Machine on. 
 
-TMD=`/usr/bin/osascript <<-EOF
-set fileLists to paragraphs of (do shell script "ls /Volumes/ | grep -v 'Macintosh HD' | grep -v 'JSS_Repo'")
-    tell application "System Events"
-        activate
-        choose from list fileLists
-    end tell
-EOF`
+#TMD=`/usr/bin/osascript <<-EOF
+#set fileLists to paragraphs of (do shell script "ls /Volumes/ | grep -v 'Macintosh HD' | grep -v 'JSS_Repo'")
+#    tell application "System Events"
+#        activate
+#        choose from list fileLists
+#    end tell
+#EOF`
 
 echo $TMD
 
@@ -260,21 +263,19 @@ done
 echo "Users password verified and beginning encryption"
 
 #Convert the drive to encrypted
-diskutil cs convert /Volumes/$TMD -passphrase $PASSONE  
+echo "diskutil command"
+#diskutil cs convert /Volumes/$TMD -passphrase $PASSONE  
 
 #setup time machine to use the drive
 echo "tmutil setdestination"
-tmutil setdestination /Volumes/$TMD
+#tmutil setdestination /Volumes/$TMD
 
 echo "tmutil enable for automatic backups"
-tmutil enable
+#tmutil enable
 
 echo "tmutil enable local snapshots"
-tmutil enablelocal
+#tmutil enablelocal
 
-#setup time machine exclusions (only backing up /Users)
-#echo "setup exclusions"
-#tmutil addexclusion /System /Library /Applications /var /etc /Developer /Groups /Incompatible\ Software /Volumes /bin /cores /usr /tmp /temp /opt /net /home /Shared\ Items /Network /Groups
 
 fi
 
