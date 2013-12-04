@@ -59,13 +59,13 @@ if [ "$COREDISK" == "Complete" ]; then
 	echo "Disk is already encrypted"
 	
 	echo "tmutil setdestination"
-	#tmutil setdestination /Volumes/$TMDselected
+	tmutil setdestination /Volumes/$TMDselected
 
 	echo "tmutil enable for automatic backups"
-	#tmutil enable
+	tmutil enable
 
 	echo "tmutil enable local snapshots"
-	#tmutil enablelocal
+	tmutil enablelocal
 	
 	exit 0
 else
@@ -108,13 +108,12 @@ if [ "$TMDRECORD" != "Apple_HFS" ] ; then
 		fi
 
 
-		#diskutil eraseDisk JHFS+ $TMDselected $DISK
+		diskutil eraseDisk JHFS+ $TMDselected $DISK
 		echo "drive was formated Journaled HFS+ and repartitioned to GUID"
 		
 else
 	
 	if [ "$TMDFORMAT" != "JournaledHFS+" ] ; then
-		#ask the users are they really sure
 		#ask the users are they really sure
 		FIRST=`$CD yesno-msgbox --no-cancel --string-output --no-newline --text "The drive you have selected needs to be re-formatted to be used with Time Machine. Do you want to re-format it?"`
 
@@ -147,7 +146,7 @@ else
 			exit 1
 		fi
 		
-		#diskutil erase $TMDselected JHFS+
+		diskutil erase $TMDselected JHFS+
 		echo "Partition reformated to JHFS+"
 		
 	else
@@ -200,16 +199,16 @@ echo "Users password verified and beginning encryption"
 
 #Convert the drive to encrypted
 echo "diskutil command"
-#diskutil cs convert /Volumes/$TMDselected -passphrase $PASSONE  
+diskutil cs convert /Volumes/$TMDselected -passphrase $PASSONE  
 
 #setup time machine to use the drive
 echo "tmutil setdestination"
-#tmutil setdestination /Volumes/$TMDselected
+tmutil setdestination /Volumes/$TMDselected
 
 echo "tmutil enable for automatic backups"
-#tmutil enable
+tmutil enable
 
 echo "tmutil enable local snapshots"
-#tmutil enablelocal
+tmutil enablelocal
 
 exit 0
