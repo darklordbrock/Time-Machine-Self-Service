@@ -86,7 +86,7 @@ if [ "$TMDRECORD" != "Apple_HFS" ] ; then
 
 		#do you want me to format X
 	
-		SECOND=`$CD yesno-msgbox --no-cancel --string-output --no-newline --title "Data Loss" --text "All Data on Drive will be lost"  --informative-text "All data on this drive will be lost when it is re-formatted. Are you sure you want it re-formatted?"`
+		SECOND=`$CD yesno-msgbox --no-cancel --string-output --no-newline --title "Data Loss" --text "All Data on Drive will be lost" --informative-text "All data on this drive will be lost when it is RE-FORMATTED. Are you sure you want to continue?"`
 
 		if [ "$SECOND" == "Yes" ]; then
 			echo "Uesr clicked yes second time"
@@ -97,7 +97,7 @@ if [ "$TMDRECORD" != "Apple_HFS" ] ; then
 
 		#are you really sure
 	
-		THIRD=`$CD yesno-msgbox --no-cancel --string-output --no-newline --title "For sure" --text "Are you really sure?"  --informative-text "Are you really sure you want re-format the disk? All data on this drive will be erased after you click yes."`
+		THIRD=`$CD yesno-msgbox --no-cancel --string-output --no-newline --title "Confirmation" --text "Are you sure?" --informative-text "Are you sure that you want to RE-FORMAT the disk? ALL DATA on this drive will be ERASED after your click yes."`
 
 		if [ "$THIRD" == "Yes" ]; then
 			echo "Uesr clicked yes third time"
@@ -125,7 +125,7 @@ else
 
 		#do you want me to format X
 	
-		SECOND=`$CD yesno-msgbox --no-cancel --string-output --no-newline --title "Data Loss" --text "All Data on Drive will be lost"  --informative-text "All data on this drive will be lost when it is re-formatted. Are you sure you want it re-formatted?"`
+		SECOND=`$CD yesno-msgbox --no-cancel --string-output --no-newline --title "Data Loss" --text "All Data on Drive will be lost" --informative-text "All data on this drive will be lost when it is RE-FORMATTED. Are you sure you want to continue?"`
 
 		if [ "$SECOND" == "Yes" ]; then
 			echo "Uesr clicked yes second time"
@@ -136,7 +136,7 @@ else
 
 		#are you really sure
 	
-		THIRD=`$CD yesno-msgbox --no-cancel --string-output --no-newline --title "For sure" --text "Are you really sure?"  --informative-text "Are you really sure you want re-format the disk? All data on this drive will be erased after you click yes."`
+		THIRD=`$CD yesno-msgbox --no-cancel --string-output --no-newline --title "Confirmation" --text "Are you sure?" --informative-text "Are you sure that you want to RE-FORMAT the disk? ALL DATA on this drive will be ERASED after your click yes."`
 
 		if [ "$THIRD" == "Yes" ]; then
 			echo "Uesr clicked yes third time"
