@@ -75,7 +75,7 @@ fi
 if [ "$TMDRECORD" != "Apple_HFS" ] ; then
 	
 		#ask the users are they really sure
-		FIRST=`$CD yesno-msgbox --no-cancel --string-output --no-newline --text "The drive you have selected needs to be re-formatted to be used with Time Machine. Do you want to re-format it?"`
+		FIRST=`$CD yesno-msgbox --no-cancel --string-output --no-newline --title "Drive Re-format" --text "The Selected Drive needs to be re-formatted." --informative-text "The drive you have selected needs to be re-formatted to be used with Time Machine. Do you want to re-format it?"`
 
 		if [ "$FIRST" == "Yes" ]; then
 			echo "Uesr clicked yes first time"
@@ -86,7 +86,7 @@ if [ "$TMDRECORD" != "Apple_HFS" ] ; then
 
 		#do you want me to format X
 	
-		SECOND=`$CD yesno-msgbox --no-cancel --string-output --no-newline --text "All data on this drive will be lost when it is re-formatted. Are you sure you want it re-formatted?"`
+		SECOND=`$CD yesno-msgbox --no-cancel --string-output --no-newline --title "Data Loss" --text "All Data on Drive will be lost"  --informative-text "All data on this drive will be lost when it is re-formatted. Are you sure you want it re-formatted?"`
 
 		if [ "$SECOND" == "Yes" ]; then
 			echo "Uesr clicked yes second time"
@@ -97,7 +97,7 @@ if [ "$TMDRECORD" != "Apple_HFS" ] ; then
 
 		#are you really sure
 	
-		THIRD=`$CD yesno-msgbox --no-cancel --string-output --no-newline --text "Are you really sure you want re-format the disk? All data on this drive will be erased after you click yes."`
+		THIRD=`$CD yesno-msgbox --no-cancel --string-output --no-newline --title "For sure" --text "Are you really sure?"  --informative-text "Are you really sure you want re-format the disk? All data on this drive will be erased after you click yes."`
 
 		if [ "$THIRD" == "Yes" ]; then
 			echo "Uesr clicked yes third time"
@@ -114,7 +114,7 @@ else
 	
 	if [ "$TMDFORMAT" != "JournaledHFS+" ] ; then
 		#ask the users are they really sure
-		FIRST=`$CD yesno-msgbox --no-cancel --string-output --no-newline --text "The drive you have selected needs to be re-formatted to be used with Time Machine. Do you want to re-format it?"`
+		FIRST=`$CD yesno-msgbox --no-cancel --string-output --no-newline --title "Drive Re-format" --text "The Selected Drive needs to be re-formatted." --informative-text "The drive you have selected needs to be re-formatted to be used with Time Machine. Do you want to re-format it?"`
 
 		if [ "$FIRST" == "Yes" ]; then
 			echo "Uesr clicked yes first time"
@@ -125,7 +125,7 @@ else
 
 		#do you want me to format X
 	
-		SECOND=`$CD yesno-msgbox --no-cancel --string-output --no-newline --text "All data on this drive will be lost when it is re-formatted. Are you sure you want it re-formatted?"`
+		SECOND=`$CD yesno-msgbox --no-cancel --string-output --no-newline --title "Data Loss" --text "All Data on Drive will be lost"  --informative-text "All data on this drive will be lost when it is re-formatted. Are you sure you want it re-formatted?"`
 
 		if [ "$SECOND" == "Yes" ]; then
 			echo "Uesr clicked yes second time"
@@ -136,7 +136,7 @@ else
 
 		#are you really sure
 	
-		THIRD=`$CD yesno-msgbox --no-cancel --string-output --no-newline --text "Are you really sure you want re-format the disk? All data on this drive will be erased after you click yes."`
+		THIRD=`$CD yesno-msgbox --no-cancel --string-output --no-newline --title "For sure" --text "Are you really sure?"  --informative-text "Are you really sure you want re-format the disk? All data on this drive will be erased after you click yes."`
 
 		if [ "$THIRD" == "Yes" ]; then
 			echo "Uesr clicked yes third time"
@@ -172,7 +172,6 @@ while [ $PASSONE != $PASSTWO ];do
 	
 	done
 	
-	echo $PASSONE
 	#Sets the nothing2 variable 
 	NOTHING2="2"
 	
@@ -182,8 +181,6 @@ while [ $PASSONE != $PASSTWO ];do
 		PASSTWO=`$CD secure-standard-inputbox --no‑cancel --float --title "Verify Password" --informative-text "Re-enter password for Time machine Drive "` 
 	
 	done
-	
-	echo $PASSTWO
 	
 	if [ $PASSONE != $PASSTWO ]; then
 
@@ -198,8 +195,6 @@ while [ $PASSONE != $PASSTWO ];do
 done
 
 PASS=`echo $PASSONE | awk '{ print $2 }'`
-
-echo $PASS
 
 echo "Users password verified and beginning encryption"
 
