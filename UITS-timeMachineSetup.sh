@@ -37,7 +37,6 @@ while [ $TMD = "NotADisk" ];do
 	
 done
 
-echo "TMD1" $TMD1
 echo "TMDselected" $TMDselected
 echo "User Selected " $TMDselected " as their Time Machine Drive"
 
@@ -59,7 +58,7 @@ if [ "$COREDISK" == "Complete" ]; then
 	echo "Disk is already encrypted"
 	
 	echo "tmutil setdestination"
-	tmutil setdestination /Volumes/$TMDselected
+	tmutil setdestination "$TMDselected"
 
 	echo "tmutil enable for automatic backups"
 	tmutil enable
@@ -78,7 +77,7 @@ if [ "$TMDRECORD" != "Apple_HFS" ] ; then
 		#ask the users are they really sure
 		FIRST=`$CD yesno-msgbox --no-cancel --string-output --no-newline --text "The drive you have selected needs to be re-formatted to be used with Time Machine. Do you want to re-format it?"`
 
-		if [ "$FIRST" == "YES" ]; then
+		if [ "$FIRST" == "Yes" ]; then
 			echo "Uesr clicked yes first time"
 		else
 			echo "User clicked no first time"
@@ -89,7 +88,7 @@ if [ "$TMDRECORD" != "Apple_HFS" ] ; then
 	
 		SECOND=`$CD yesno-msgbox --no-cancel --string-output --no-newline --text "All data on this drive will be lost when it is re-formatted. Are you sure you want it re-formatted?"`
 
-		if [ "$SECOND" == "YES" ]; then
+		if [ "$SECOND" == "Yes" ]; then
 			echo "Uesr clicked yes second time"
 		else
 			echo "User clicked no second time"
@@ -100,15 +99,15 @@ if [ "$TMDRECORD" != "Apple_HFS" ] ; then
 	
 		THIRD=`$CD yesno-msgbox --no-cancel --string-output --no-newline --text "Are you really sure you want re-format the disk? All data on this drive will be erased after you click yes."`
 
-		if [ "$THIRD" == "YES" ]; then
+		if [ "$THIRD" == "Yes" ]; then
 			echo "Uesr clicked yes third time"
 		else
 			echo "User clicked no third time"
 			exit 1
 		fi
 
-
-		diskutil eraseDisk JHFS+ $TMDselected $DISK
+		TMDselectedJUSTname=`echo $TMDselected | cut -b 10-`
+		diskutil eraseDisk JHFS+ "$TMDselectedJUSTname" $DISK
 		echo "drive was formated Journaled HFS+ and repartitioned to GUID"
 		
 else
@@ -117,7 +116,7 @@ else
 		#ask the users are they really sure
 		FIRST=`$CD yesno-msgbox --no-cancel --string-output --no-newline --text "The drive you have selected needs to be re-formatted to be used with Time Machine. Do you want to re-format it?"`
 
-		if [ "$FIRST" == "YES" ]; then
+		if [ "$FIRST" == "Yes" ]; then
 			echo "Uesr clicked yes first time"
 		else
 			echo "User clicked no first time"
@@ -128,7 +127,7 @@ else
 	
 		SECOND=`$CD yesno-msgbox --no-cancel --string-output --no-newline --text "All data on this drive will be lost when it is re-formatted. Are you sure you want it re-formatted?"`
 
-		if [ "$SECOND" == "YES" ]; then
+		if [ "$SECOND" == "Yes" ]; then
 			echo "Uesr clicked yes second time"
 		else
 			echo "User clicked no second time"
@@ -139,14 +138,14 @@ else
 	
 		THIRD=`$CD yesno-msgbox --no-cancel --string-output --no-newline --text "Are you really sure you want re-format the disk? All data on this drive will be erased after you click yes."`
 
-		if [ "$THIRD" == "YES" ]; then
+		if [ "$THIRD" == "Yes" ]; then
 			echo "Uesr clicked yes third time"
 		else
 			echo "User clicked no third time"
 			exit 1
 		fi
 		
-		diskutil erase $TMDselected JHFS+
+		diskutil erase "$TMDselected" JHFS+
 		echo "Partition reformated to JHFS+"
 		
 	else
@@ -169,20 +168,23 @@ while [ $PASSONE != $PASSTWO ];do
 	#input from user on password for the drive
 	while [ $PASSONE -eq $NOTHING1 ]; do
 	
-		PASSONE=`$CD secure-standard-inputbox --no‑cancel --float --informative‑text "Enter password for Time machine Drive:"`
+		PASSONE=`$CD secure-standard-inputbox --no‑cancel --float --title "Enter Password" --informative-text "Enter password for Time machine Drive:"`
 	
 	done
 	
+	echo $PASSONE
 	#Sets the nothing2 variable 
 	NOTHING2="2"
 	
 	#verify password from the user for the drive
 	while [ $PASSTWO -eq $NOTHING2 ]; do
 	
-		PASSTWO=`$CD secure-standard-inputbox --no‑cancel --float --informative‑text "Re-enter password for Time machine Drive "` 
+		PASSTWO=`$CD secure-standard-inputbox --no‑cancel --float --title "Verify Password" --informative-text "Re-enter password for Time machine Drive "` 
 	
 	done
-
+	
+	echo $PASSTWO
+	
 	if [ $PASSONE != $PASSTWO ]; then
 
 		PASSONE="1"
@@ -195,15 +197,19 @@ while [ $PASSONE != $PASSTWO ];do
 	
 done
 
+PASS=`echo $PASSONE | awk '{ print $2 }'`
+
+echo $PASS
+
 echo "Users password verified and beginning encryption"
 
 #Convert the drive to encrypted
 echo "diskutil command"
-diskutil cs convert /Volumes/$TMDselected -passphrase $PASSONE  
+diskutil cs convert "$TMDselected" -passphrase $PASS  
 
 #setup time machine to use the drive
 echo "tmutil setdestination"
-tmutil setdestination /Volumes/$TMDselected
+tmutil setdestination "$TMDselected"
 
 echo "tmutil enable for automatic backups"
 tmutil enable
