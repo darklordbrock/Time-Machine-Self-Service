@@ -47,11 +47,11 @@ DISK=`diskutil info "$TMDselected" | grep "Part of Whole:" | awk '{print $4}'`
 COREDISK=`diskutil corestorage info $DISK | grep "Conversion Status:" | awk '{print $3}'`
 
 #
-echo "Time Machine Drive Selected Partition Type: " $TMDRECORD 
+echo "######Time Machine Drive Selected Partition Type: " $TMDRECORD 
 
-echo "Time Machine Drive Selected File System Personality: " $TMDFORMAT
+echo "######Time Machine Drive Selected File System Personality: " $TMDFORMAT
 
-echo "Time Machine Drive Selected Part of Disk: " $DISK
+echo "######Time Machine Drive Selected Part of Disk: " $DISK
 
 #
 if [ "$COREDISK" == "Complete" ]; then
@@ -107,6 +107,7 @@ if [ "$TMDRECORD" != "Apple_HFS" ] ; then
 		fi
 
 		TMDselectedJUSTname=`echo $TMDselected | cut -b 10-`
+		echo "######diskutil eraseDisk JHFS+" $TMDselectedJUSTname $DISK
 		diskutil eraseDisk JHFS+ "$TMDselectedJUSTname" $DISK
 		echo "drive was formated Journaled HFS+ and repartitioned to GUID"
 		
